@@ -48,6 +48,7 @@ async def delete_video(video_id: str, db=Depends(get_db)):
 def upload_video(user=Depends(verify_token)):
     return {"msg": f"Video uploaded by {user['username']}"}
 
+@router.get("/health-db")
 async def health_db():
     try:
         await db.command("ping")
