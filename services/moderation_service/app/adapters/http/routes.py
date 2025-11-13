@@ -40,3 +40,11 @@ async def delete_request(req_id: str):
     if not deleted:
         raise HTTPException(404)
     return {"deleted": req_id}
+
+@router.get("/health/db")
+async def health_db():
+    try:
+        await db.command("ping")
+        return {"status": "ok", "db": "reachable"}
+    except Exception as e:
+        return {"status": "error", "db": "unreachable", "detail": str(e)}

@@ -41,7 +41,7 @@ async def delete_job(job_id: str):
         raise HTTPException(404)
     return {"deleted": job_id}
 
-@router.get("/health-db")
+@router.get("/health/db")
 async def health_db():
     try:
         await db.command("ping")
