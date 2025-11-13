@@ -1,6 +1,3 @@
-# render.yaml
-# 🧱 Описание инфраструктуры Video Platform
-
 services:
   # 🎬 Video Service
   - type: web
@@ -8,14 +5,12 @@ services:
     env: docker
     rootDir: ./services/video_service
     plan: free
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "uvicorn main:app --host 0.0.0.0 --port 8000"
+    autoDeploy: true
     envVars:
       - key: MONGO_URI
         value: mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.mongodb.net/?retryWrites=true&w=majority
       - key: DB_NAME
         value: videosdb
-    autoDeploy: true
 
   # ⚙️ Transcoder Service
   - type: web
@@ -23,18 +18,14 @@ services:
     env: docker
     rootDir: ./services/transcoder_service
     plan: free
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "uvicorn main:app --host 0.0.0.0 --port 8000"
+    autoDeploy: true
     envVars:
       - key: VIDEO_SERVICE_URL
-        fromService:
-          name: video-service
-          type: web
+        value: https://video-service.onrender.com  # 👈 вручную подставь URL после деплоя
       - key: MONGO_URI
         value: mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.mongodb.net/?retryWrites=true&w=majority
       - key: DB_NAME
         value: videosdb
-    autoDeploy: true
 
   # 🛡️ Moderation Service
   - type: web
@@ -42,11 +33,7 @@ services:
     env: docker
     rootDir: ./services/moderation_service
     plan: free
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "uvicorn main:app --host 0.0.0.0 --port 8000"
+    autoDeploy: true
     envVars:
       - key: VIDEO_SERVICE_URL
-        fromService:
-          name: video-service
-          type: web
-    autoDeploy: true
+        value: https://video-service.onrender.com  # 👈 тоже вручную
