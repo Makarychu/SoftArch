@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from ...domain.models import TranscodeJob, JobStatus
 from ..repo.memory_repo import InMemoryTranscodeRepo
 from ...infrastructure.clients import notify_video_service
+from app.db import db
 
 repo = InMemoryTranscodeRepo()
 router = APIRouter()

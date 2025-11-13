@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from ...domain.models import ModerationRequest, ModerationStatus
 from ..repo.memory_repo import InMemoryModerationRepo
 from ...infrastructure.clients import update_video_status
+from app.db import db
 
 repo = InMemoryModerationRepo()
 router = APIRouter()
