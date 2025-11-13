@@ -8,7 +8,7 @@ services:
     autoDeploy: true
     envVars:
       - key: MONGO_URI
-        value: mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.mongodb.net/?retryWrites=true&w=majority
+        value: mongodb+srv://admin:A7VZUCwogyBPpAlE@cluster0.h9ujml0.mongodb.net/?appName=Cluster0
       - key: DB_NAME
         value: videosdb
 
@@ -23,7 +23,7 @@ services:
       - key: VIDEO_SERVICE_URL
         value: https://video-service.onrender.com  # 👈 вручную подставь URL после деплоя
       - key: MONGO_URI
-        value: mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.mongodb.net/?retryWrites=true&w=majority
+        value: mongodb+srv://admin:A7VZUCwogyBPpAlE@cluster0.h9ujml0.mongodb.net/?appName=Cluster0
       - key: DB_NAME
         value: videosdb
 
