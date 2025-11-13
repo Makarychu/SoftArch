@@ -1,96 +1,96 @@
-Video Platform Microservices
-Overview
+# Video Platform Microservices
 
-This project is a FastAPI microservices platform for video management.
+## Overview
+
+This project is a **FastAPI microservices platform** for video management.  
 It consists of three services:
 
-Video Service – CRUD operations for videos.
+- **Video Service** – CRUD operations for videos.  
+- **Transcoder Service** – Video processing and transcoding.  
+- **Moderation Service** – Content moderation for videos.  
 
-Transcoder Service – Video processing and transcoding.
+The services use **MongoDB Atlas** as the database and are fully containerized using **Docker**.  
+The project is designed to be deployed on **Render** cloud platform.
 
-Moderation Service – Content moderation for videos.
+---
 
-The services use MongoDB Atlas as the database and are fully containerized using Docker.
-The project is designed to be deployed on Render cloud platform.
+## Features
 
-Features
+- REST API endpoints for each service under `/api`.  
+- Health check endpoints:  
+  - `/video/api/health/db` – checks MongoDB connectivity.  
+- Dockerized for easy deployment.  
+- Supports environment variables for configuration.  
+- SSL/TLS secured connection to MongoDB Atlas.
 
-REST API endpoints for each service under /api.
+---
 
-Health check endpoints:
+## Prerequisites
 
-/video/api/health/db – checks MongoDB connectivity.
+- Python 3.11+ (for local testing)  
+- Docker installed  
+- Free [Render](https://render.com) account  
+- Free [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cluster  
+- GitHub repository with project code
 
-Dockerized for easy deployment.
+---
 
-Supports environment variables for configuration.
+## Environment Variables
 
-SSL/TLS secured connection to MongoDB Atlas.
+Create the following environment variables in Render (do **not** commit `.env` to GitHub):
 
-Prerequisites
+| Variable     | Description                            |
+|-------------|----------------------------------------|
+| `MONGO_URI` | MongoDB Atlas connection string         |
+| `DB_NAME`   | Name of your database                   |
+| `JWT_SECRET`| Secret key for authentication (random) |
 
-Python 3.11+ (for local testing)
-
-Docker installed
-
-Free Render
- account
-
-Free MongoDB Atlas
- cluster
-
-GitHub repository with project code
-
-Environment Variables
-
-Create the following environment variables in Render (do not commit .env to GitHub):
-
-Variable	Description
-MONGO_URI	MongoDB Atlas connection string
-DB_NAME	Name of your database
-JWT_SECRET	Secret key for authentication (random)
-
-Example MONGO_URI:
+Example `MONGO_URI`:
 
 mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority
 
-Local Setup
+yaml
+Копировать код
 
-Clone the repository:
+---
 
+## Local Setup
+
+1. Clone the repository:
+
+```bash
 git clone https://github.com/yourusername/video-platform.git
 cd video-platform
-
-
+```
 Build Docker containers:
 
+```bash
 docker-compose build
-
-
+```
 Run containers locally:
 
+```bash
 docker-compose up
-
-
+```
 Test endpoints via Swagger UI:
 
+```bash
 http://localhost:8080/docs
-
-
+```
 Test database health:
 
+```bash
 GET http://localhost:8080/video/api/health/db
-
-
+```
 Expected response:
 
+```json
 {
   "status": "ok",
   "db": "reachable"
 }
-
+```
 Deployment on Render
-
 Push your repository to GitHub.
 
 Create a new Web Service on Render:
@@ -105,34 +105,34 @@ Deploy the project.
 
 After deployment, test endpoints at:
 
+```
 https://your-app-name.onrender.com/video/api/health/db
-
+```
 Dockerfile Notes
-
 Based on python:3.11-slim
 
 Installs ca-certificates and openssl for SSL/TLS connection to MongoDB Atlas:
 
+```dockerfile
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ca-certificates openssl && \
     update-ca-certificates && \
     rm -rf /var/lib/apt/lists/*
-
+```
 Health Checks
-
 Each service exposes a /health/db endpoint to verify MongoDB connectivity.
 Example:
 
+```bash
 curl https://your-app-name.onrender.com/video/api/health/db
-
-
+```
 Response:
 
+```json
 {
   "status": "ok",
   "db": "reachable"
 }
-
+```
 License
-
 This project is for academic purposes only.
