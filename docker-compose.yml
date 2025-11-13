@@ -28,7 +28,7 @@ services:
   video-service:
     build: ./services/video_service
     environment:
-      - MONGO_URI=mongodb://mongo1:27017/?replicaSet=rs0
+      - MONGO_URI=mongodb+srv://admin:A7VZUCwogyBPpAlE@cluster0.h9ujml0.mongodb.net/?appName=Cluster0
       - DB_NAME=videosdb
     depends_on:
       - mongo-setup
