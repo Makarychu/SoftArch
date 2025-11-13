@@ -1,0 +1,52 @@
+# render.yaml
+# 🧱 Описание инфраструктуры Video Platform
+
+services:
+  # 🎬 Video Service
+  - type: web
+    name: video-service
+    env: docker
+    rootDir: ./services/video_service
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port 8000"
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.mongodb.net/?retryWrites=true&w=majority
+      - key: DB_NAME
+        value: videosdb
+    autoDeploy: true
+
+  # ⚙️ Transcoder Service
+  - type: web
+    name: transcoder-service
+    env: docker
+    rootDir: ./services/transcoder_service
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port 8000"
+    envVars:
+      - key: VIDEO_SERVICE_URL
+        fromService:
+          name: video-service
+          type: web
+      - key: MONGO_URI
+        value: mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.mongodb.net/?retryWrites=true&w=majority
+      - key: DB_NAME
+        value: videosdb
+    autoDeploy: true
+
+  # 🛡️ Moderation Service
+  - type: web
+    name: moderation-service
+    env: docker
+    rootDir: ./services/moderation_service
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port 8000"
+    envVars:
+      - key: VIDEO_SERVICE_URL
+        fromService:
+          name: video-service
+          type: web
+    autoDeploy: true
