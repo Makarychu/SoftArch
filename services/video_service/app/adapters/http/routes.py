@@ -47,15 +47,14 @@ async def delete_video(video_id: str, db=Depends(get_db)):
 @router.post("/upload")
 def upload_video(user=Depends(verify_token)):
     return {"msg": f"Video uploaded by {user['username']}"}
-
-@router.get("/health-db")
+    
+@router.get("/health/db")
 async def health_db():
     try:
         await db.command("ping")
         return {"status": "ok", "db": "reachable"}
     except Exception as e:
         return {"status": "error", "db": "unreachable", "detail": str(e)}
-
 
 
 
