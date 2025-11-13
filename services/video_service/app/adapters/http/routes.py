@@ -4,6 +4,7 @@ from app.adapters.repo.mongo_repo import MongoVideoRepository
 from app.usecase.video_service import VideoService
 from fastapi import Depends
 from app.core.auth import verify_token
+from app.db import db
 
 router = APIRouter()
 
